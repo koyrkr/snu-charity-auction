@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
+    'imagekit',
 ]
 
 MIDDLEWARE = [
@@ -137,6 +138,3 @@ LOGIN_REDIRECT_URL = 'index'
 AUTH_USER_MODEL = 'auction.User'
 
 LOGIN_URL = '/login/'
-
-# Configure heroku
-django_heroku.settings(locals())

@@ -4,6 +4,9 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from imagekit.models import ProcessedImageField
+from imagekit.processors import ResizeToFill
+
 
 class User(AbstractUser):
     """Custom user model with email auth and admin support"""
@@ -23,13 +26,45 @@ class User(AbstractUser):
     REQUIRED_FIELDS = ['username']
 
 
+def image_path1(instance, filename):
+    return f'static/images/{instance.name}/1.jpg'
+
+
+def image_path2(instance, filename):
+    return f'static/images/{instance.name}/2.jpg'
+
+
+def image_path3(instance, filename):
+    return f'static/images/{instance.name}/3.jpg'
+
+
 class Auction(models.Model):
     id = models.AutoField(primary_key=True)
     admin = models.ForeignKey(User, on_delete=models.PROTECT, related_name='admin_auction_set')
     name = models.CharField(max_length=255, null=False, blank=False)
     type = models.IntegerField(default=2, null=False)
     contents = models.TextField(null=False, blank=True)
-    # images
+    image1 = ProcessedImageField(
+        upload_to=image_path1,
+        processors=[ResizeToFill(800, 800)],
+        format='JPEG',
+        options={'quality': 90},
+        null=True
+    )
+    image2 = ProcessedImageField(
+        upload_to=image_path2,
+        processors=[ResizeToFill(800, 800)],
+        format='JPEG',
+        options={'quality': 90},
+        null=True
+    )
+    image3 = ProcessedImageField(
+        upload_to=image_path3,
+        processors=[ResizeToFill(800, 800)],
+        format='JPEG',
+        options={'quality': 90},
+        null=True
+    )
     state = models.CharField(max_length=20, null=False, blank=False)  # 준비, 진행중, 완료, 낙찰, 취소
     start_datetime = models.DateTimeField(null=False, blank=False)
     end_datetime = models.DateTimeField(null=False, blank=False)

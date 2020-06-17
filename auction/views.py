@@ -110,6 +110,30 @@ def auction_view(request):
     return render(request, 'auction.html', context=context)
 
 
+def auction_apply_view(request, auction_id):
+    user = request.user
+    bid = int(request.POST['bid'])
+    auction = Auction.objects.get(id=auction_id)
+    min_bid = auction.winning_bid + 1000
+    if not bid >= min_bid:
+        message = '입찰가가 가능한 최소 입찰가보다 작습니다.'
+    elif bid % 1000 != 0:
+        message = '입찰은 1,000원 단위로 가능합니다.'
+    else:
+        AuctionHistory.objects.filter(auction_id=auction_id).update(is_valid=False)
+        auction_history = AuctionHistory(auction_id=auction_id, user_id=user.id, bid=bid, is_valid=True)
+        auction_history.save()
+        auction.winning_bid = bid
+        auction.winning_user_id = user.id
+        auction.participants_count = auction.participants_count + 1
+        auction.updated_datetime = timezone.now()
+        auction.save()
+        message = '입찰되었습니다.'
+
+    context = {'message': message, 'auction_id': auction_id}
+    return render(request, 'auction-apply.html', context=context)
+
+
 def auction_history_view(request):
     user = request.user
     auction_history = AuctionHistory.objects.filter(user_id=user.id)
@@ -149,14 +173,18 @@ def create_auction(request):
     min_bid = request.POST['min-bid']
     max_bid = request.POST['max-bid']
 
+    file = request.FILES['image1']
+    print(file)
+
     auction = Auction(
         admin_id=admin_id,
         name=name,
         contents=contents,
+        image1 = file,
         start_datetime=start_datetime,
         end_datetime=end_datetime,
         min_bid=min_bid,
-        max_bid=max_bid
+        max_bid=max_bid,
     )
     auction.save()
 
@@ -211,10 +239,15 @@ def auction_detail_view(request, auction_id):
     if timezone.now() >= auction.start_datetime and auction.state == '준비':
         auction.state = '진행중'
         auction.save()
-    formatted_start_datetime = dateformat.format(auction.start_datetime, 'Y-m-d H:i:s')
-    formatted_end_datetime = dateformat.format(auction.end_datetime, 'Y-m-d H:i:s')
-    context = {'auction': auction, 'formatted_start_datetime': formatted_start_datetime,
-               'formatted_end_datetime': formatted_end_datetime}
+    if timezone.now() >= auction.end_datetime and auction.state == '진행중':
+        auction.state = '완료'
+        auction.save()
+    auction_history = AuctionHistory.objects.filter(auction_id=auction_id).order_by('created_datetime').reverse()
+    min_bid = auction.min_bid
+    if auction_history:
+        min_bid = auction.winning_bid + 1000
+    print(auction.image1)
+    context = {'auction': auction, 'auction_history': auction_history, 'min_bid': min_bid}
     return render(request, 'auction-detail.html', context)
 
 

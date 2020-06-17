@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+  <div class="container" style="height: 400px;">
+    <div class="text-center" style="margin-top: 200px;">
+      <h4>{{ message }}</h4>
+      <br>
+      <a href="/auction/detail/{{ auction_id }}" class="btn btn-success">돌아가기</a>
+    </div>
+  </div>
+{% endblock %}
