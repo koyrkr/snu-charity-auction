@@ -27,15 +27,15 @@ class User(AbstractUser):
 
 
 def image_path1(instance, filename):
-    return f'static/images/{instance.name}/1.jpg'
+    return f'auction/static/images/{instance.name}/1.jpg'
 
 
 def image_path2(instance, filename):
-    return f'static/images/{instance.name}/2.jpg'
+    return f'auction/static/images/{instance.name}/2.jpg'
 
 
 def image_path3(instance, filename):
-    return f'static/images/{instance.name}/3.jpg'
+    return f'auction/static/images/{instance.name}/3.jpg'
 
 
 class Auction(models.Model):

@@ -60,7 +60,7 @@
           <input value="사진 선택" disabled="disabled">
           <input type="file" name="image1" id="image1" class="upload-hidden" style="width: 250px;">
           {% if auction.image1 %}
-            현재 파일: {{ auction.image1 | cut:'static/images/' }}
+            현재 파일: {{ auction.image1 | cut:'auction/static/images/' }}
             <div class="form-check" style="margin-left: 100px; display: inline-block;">
               <input class="form-check-input" type="checkbox" value="1" name="image1-delete" id="image1-delete">
               <label class="form-check-label" for="image1-delete">삭제</label>
@@ -72,7 +72,7 @@
           <input value="사진 선택" disabled="disabled">
           <input type="file" name="image2" id="image2" class="upload-hidden" style="width: 250px;">
           {% if auction.image2 %}
-            현재 파일: {{ auction.image2 | cut:'static/images/' }}
+            현재 파일: {{ auction.image2 | cut:'auction/static/images/' }}
             <div class="form-check" style="margin-left: 100px; display: inline-block;">
               <input class="form-check-input" type="checkbox" value="1" name="image2-delete" id="image2-delete">
               <label class="form-check-label" for="image2-delete">삭제</label>
@@ -84,7 +84,7 @@
           <input value="사진 선택" disabled="disabled">
           <input type="file" name="image3" id="image3" class="upload-hidden" style="width: 250px;">
           {% if auction.image3 %}
-            현재 파일: {{ auction.image3 | cut:'static/images/' }}
+            현재 파일: {{ auction.image3 | cut:'auction/static/images/' }}
             <div class="form-check" style="margin-left: 100px; display: inline-block;">
               <input class="form-check-input" type="checkbox" value="1" name="image3-delete" id="image3-delete">
               <label class="form-check-label" for="image3-delete">삭제</label>

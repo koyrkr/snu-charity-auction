@@ -8,11 +8,20 @@
     <form class="needs-validation" novalidate action="/api/auction/create/" method="post" enctype="multipart/form-data">
       {% csrf_token %}
       <div class="row">
-        <div class="col-md-12 mb-3">
+        <div class="col-md-8 mb-3">
           <label for="name">제목</label>
           <div class="input-group">
             <input type="text" class="form-control" name="name" id="name" placeholder="" value="" required>
           </div>
+        </div>
+        <div class="col-md-4 mb-3">
+          <label for="name">종류</label>
+          <select class="form-control" name="type" style="padding: 4px;">
+            <option value="2">의류/신발</option>
+            <option value="3">전자기기</option>
+            <option value="4">책</option>
+            <option value="5">기타</option>
+          </select>
         </div>
       </div>
 

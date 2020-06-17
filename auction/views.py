@@ -167,6 +167,7 @@ def user_update(request):
 def create_auction(request):
     admin_id = request.user.id
     name = request.POST['name']
+    type = request.POST['type']
     contents = request.POST['contents']
     start_datetime = request.POST['start-datetime']
     end_datetime = request.POST['end-datetime']
@@ -179,6 +180,7 @@ def create_auction(request):
     auction = Auction(
         admin_id=admin_id,
         name=name,
+        type=type,
         contents=contents,
         image1=file1,
         image2=file2,
@@ -208,6 +210,7 @@ def modify_auction_view(request, auction_id):
 def modify_auction(request):
     auction_id = request.POST['auction-id']
     name = request.POST['name']
+    type = request.POST['type']
     contents = request.POST['contents']
     start_datetime = request.POST['start-datetime']
     end_datetime = request.POST['end-datetime']

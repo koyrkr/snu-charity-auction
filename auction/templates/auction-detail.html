@@ -9,23 +9,23 @@
       <div class="row" style="height: 700px;">
         <div class="col-sm-5">
 {#          <div class="view-product">#}
-{#            <img class="img-thumbnail mb-4" src="{% static '' %}{{ auction.image1|cut:'static/' }}" alt="">#}
+{#            <img class="img-thumbnail mb-4" src="{% static '' %}{{ auction.image1|cut:'auction/static/' }}" alt="">#}
 {#          </div>#}
           <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
               {% if auction.image1 %}
                 <div class="carousel-item active">
-                  <img src="{% static '' %}{{ auction.image1|cut:'static/' }}" class="d-block w-100" alt="">
+                  <img src="{% static '' %}{{ auction.image1|cut:'auction/static/' }}" class="d-block w-100" alt="">
                 </div>
               {% endif %}
               {% if auction.image2 %}
                 <div class="carousel-item">
-                  <img src="{% static '' %}{{ auction.image2|cut:'static/' }}" class="d-block w-100" alt="">
+                  <img src="{% static '' %}{{ auction.image2|cut:'auction/static/' }}" class="d-block w-100" alt="">
                 </div>
               {% endif %}
               {% if auction.image3 %}
                 <div class="carousel-item">
-                  <img src="{% static '' %}{{ auction.image3|cut:'static/' }}" class="d-block w-100" alt="">
+                  <img src="{% static '' %}{{ auction.image3|cut:'auction/static/' }}" class="d-block w-100" alt="">
                 </div>
               {% endif %}
             </div>
@@ -44,17 +44,17 @@
               <div class="p-2">
                 {% if auction.image1 %}
                   <div class="column">
-                    <img class="img-responsive img-thumbnail float-left" src="{% static '' %}{{ auction.image1|cut:'static/' }}" alt="">
+                    <img class="img-responsive img-thumbnail float-left" src="{% static '' %}{{ auction.image1|cut:'auction/static/' }}" alt="">
                   </div>
                   {% endif %}
                 {% if auction.image2 %}
                   <div class="column">
-                    <img class="img-responsive img-thumbnail float-left" src="{% static '' %}{{ auction.image2|cut:'static/' }}" alt="">
+                    <img class="img-responsive img-thumbnail float-left" src="{% static '' %}{{ auction.image2|cut:'auction/static/' }}" alt="">
                   </div>
                 {% endif %}
                 {% if auction.image3 %}
                   <div class="column">
-                    <img class="img-responsive img-thumbnail float-left" src="{% static '' %}{{ auction.image3|cut:'static/' }}" alt="">
+                    <img class="img-responsive img-thumbnail float-left" src="{% static '' %}{{ auction.image3|cut:'auction/static/' }}" alt="">
                   </div>
                 {% endif %}
               </div>
