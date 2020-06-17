@@ -59,7 +59,7 @@ def exit_view(request):
 
 
 def auction_view(request):
-    auctions = Auction.objects.all()
+    auctions = Auction.objects.all().filter(deleted_datetime=None)
     for auction in auctions:
         if timezone.now() >= auction.start_datetime and auction.state == '준비':
             auction.state = '진행중'
@@ -172,15 +172,17 @@ def create_auction(request):
     end_datetime = request.POST['end-datetime']
     min_bid = request.POST['min-bid']
     max_bid = request.POST['max-bid']
-
-    file = request.FILES['image1']
-    print(file)
+    file1 = request.FILES['image1']
+    file2 = request.FILES['image2']
+    file3 = request.FILES['image3']
 
     auction = Auction(
         admin_id=admin_id,
         name=name,
         contents=contents,
-        image1 = file,
+        image1=file1,
+        image2=file2,
+        image3=file3,
         start_datetime=start_datetime,
         end_datetime=end_datetime,
         min_bid=min_bid,
@@ -215,6 +217,45 @@ def modify_auction(request):
     auction = Auction.objects.get(id=auction_id)
     auction.name = name
     auction.contents = contents
+    try:
+        file1 = request.FILES['image1']
+        print(file1)
+        auction.image1 = file1
+    except:
+        pass
+    try:
+        file2 = request.FILES['image2']
+        print(file2)
+        auction.image2 = file2
+    except:
+        pass
+    try:
+        file3 = request.FILES['image3']
+        print(file3)
+        auction.image3 = file3
+    except:
+        pass
+    try:
+        is_deleted = request.POST['image1-delete']
+        print(is_deleted)
+        if is_deleted:
+            auction.image1 = None
+    except:
+        pass
+    try:
+        is_deleted = request.POST['image2-delete']
+        print(is_deleted)
+        if is_deleted:
+            auction.image2 = None
+    except:
+        pass
+    try:
+        is_deleted = request.POST['image3-delete']
+        print(is_deleted)
+        if is_deleted:
+            auction.image3 = None
+    except:
+        pass
     auction.start_datetime = start_datetime
     auction.end_datetime = end_datetime
     auction.min_bid = min_bid

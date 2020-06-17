@@ -5,66 +5,96 @@
   <!-- Page Content -->
   <div class="container">
     <div class="col-md-12">
-          <h4 class="mb-3">경매 내용 수정</h4>
-          <form class="needs-validation" novalidate action="/api/auction/modify/" method="post">
-            {% csrf_token %}
-            <div class="row">
-              <div class="col-md-12 mb-3">
-                <label for="auction-id">경매번호</label>
-                <div class="input-group">
-                  <input readonly type="text" class="form-control" name="auction-id" id="auction-id" placeholder="" value="{{ auction.id }}" required>
-                </div>
-              </div>
+      <h4 class="mb-3">경매 내용 수정</h4>
+      <form class="needs-validation" novalidate action="/api/auction/modify/" method="post">
+        {% csrf_token %}
+        <div class="row">
+          <div class="col-md-12 mb-3">
+            <label for="auction-id">경매번호</label>
+            <div class="input-group">
+              <input readonly type="text" class="form-control" name="auction-id" id="auction-id" placeholder="" value="{{ auction.id }}" required>
             </div>
+          </div>
+        </div>
 
-            <div class="row">
-              <div class="col-md-12 mb-3">
-                <label for="name">제목</label>
-                <div class="input-group">
-                  <input type="text" class="form-control" name="name" id="name" placeholder="" value="{{ auction.name }}" required>
-                </div>
-              </div>
+        <div class="row">
+          <div class="col-md-12 mb-3">
+            <label for="name">제목</label>
+            <div class="input-group">
+              <input type="text" class="form-control" name="name" id="name" placeholder="" value="{{ auction.name }}" required>
             </div>
+          </div>
+        </div>
 
-            <div class="row">
-              <div class="col-md-6 mb-3">
-                <label for="min-bid">시작가(원)</label>
-                <input type="text" class="form-control" name="min-bid" id="min-bid" placeholder="" value="{{ auction.min_bid }}" required>
-              </div>
-              <div class="col-md-6 mb-3">
-                <label for="max-bid">최고가(원)</label>
-                <input type="text" class="form-control" name="max-bid" id="max-bid" placeholder="" value="{{ auction.max_bid }}" required>
-              </div>
-            </div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="min-bid">시작가(원)</label>
+            <input type="text" class="form-control" name="min-bid" id="min-bid" placeholder="" value="{{ auction.min_bid }}" required>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="max-bid">최고가(원)</label>
+            <input type="text" class="form-control" name="max-bid" id="max-bid" placeholder="" value="{{ auction.max_bid }}" required>
+          </div>
+        </div>
 
-            <div class="row">
-              <div class="col-md-6 mb-3">
-                <label for="start-datetime">시작일(yyyy-MM-dd HH:mm:ss)</label>
-                <input type="text" class="form-control" name="start-datetime" id="start-datetime" placeholder="(yyyy-MM-dd HH:mm:ss)" value="{{ formatted_start_datetime }}" required>
-              </div>
-              <div class="col-md-6 mb-3">
-                <label for="end-datetime">종료일(yyyy-MM-dd HH:mm:ss)</label>
-                <input type="text" class="form-control" name="end-datetime" id="end-datetime" placeholder="(yyyy-MM-dd HH:mm:ss)" value="{{ formatted_end_datetime }}" required>
-              </div>
-            </div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="start-datetime">시작일(yyyy-MM-dd HH:mm:ss)</label>
+            <input type="text" class="form-control" name="start-datetime" id="start-datetime" placeholder="(yyyy-MM-dd HH:mm:ss)" value="{{ formatted_start_datetime }}" required>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="end-datetime">종료일(yyyy-MM-dd HH:mm:ss)</label>
+            <input type="text" class="form-control" name="end-datetime" id="end-datetime" placeholder="(yyyy-MM-dd HH:mm:ss)" value="{{ formatted_end_datetime }}" required>
+          </div>
+        </div>
 
-            <div class="row">
-              <div class="col-md-12 mb-3">
-                <label for="contents">내용</label>
-                <textarea class="form-control" name="contents" id="contents" rows="20">{{ auction.contents }}</textarea>
-              </div>
+        <div class="row">
+          <div class="col-md-12 mb-3">
+            <label for="contents">내용</label>
+            <textarea class="form-control" name="contents" id="contents" rows="20">{{ auction.contents }}</textarea>
+          </div>
+        </div>
+
+        <div class="filebox bs3-primary">
+          <label for="image1">이미지 1&nbsp;</label>
+          <input value="사진 선택" disabled="disabled">
+          <input type="file" name="image1" id="image1" class="upload-hidden" style="width: 250px;">
+          {% if auction.image1 %}
+            현재 파일: {{ auction.image1 | cut:'static/images/' }}
+            <div class="form-check" style="margin-left: 100px; display: inline-block;">
+              <input class="form-check-input" type="checkbox" value="1" name="image1-delete" id="image1-delete">
+              <label class="form-check-label" for="image1-delete">삭제</label>
             </div>
-            
-            <div class="filebox bs3-primary">
-              <input class="upload-name" value="사진 선택" disabled="disabled">
-              
-              <label for="input-file">업로드</label>
-              <input type="file" id="input-file" class="upload-hidden"> 
+          {% endif %}
+        </div>
+        <div class="filebox bs3-primary">
+          <label for="image2">이미지 2</label>
+          <input value="사진 선택" disabled="disabled">
+          <input type="file" name="image2" id="image2" class="upload-hidden" style="width: 250px;">
+          {% if auction.image2 %}
+            현재 파일: {{ auction.image2 | cut:'static/images/' }}
+            <div class="form-check" style="margin-left: 100px; display: inline-block;">
+              <input class="form-check-input" type="checkbox" value="1" name="image2-delete" id="image2-delete">
+              <label class="form-check-label" for="image2-delete">삭제</label>
             </div>
-            
-            <hr class="mb-4">
-            <button class="btn btn-primary btn-lg btn-block" type="submit">수정하기</button>
-          </form>
+          {% endif %}
+        </div>
+        <div class="filebox bs3-primary">
+          <label for="image3">이미지 3</label>
+          <input value="사진 선택" disabled="disabled">
+          <input type="file" name="image3" id="image3" class="upload-hidden" style="width: 250px;">
+          {% if auction.image3 %}
+            현재 파일: {{ auction.image3 | cut:'static/images/' }}
+            <div class="form-check" style="margin-left: 100px; display: inline-block;">
+              <input class="form-check-input" type="checkbox" value="1" name="image3-delete" id="image3-delete">
+              <label class="form-check-label" for="image3-delete">삭제</label>
+            </div>
+          {% endif %}
+        </div>
+
+        <hr class="mb-4">
+        <button class="btn btn-primary btn-lg btn-block" type="submit">수정하기</button>
+      </form>
     </div>
   </div>
   <!-- /.container -->
