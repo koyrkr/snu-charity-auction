@@ -30,7 +30,7 @@ urlpatterns = [
     path('user-list/<int:user_id>/give_auth/', views.give_authority),
 
     path('admin/auction/', login_required(views.auction_admin_view)),
-    path('admin/auction/update-state/<int:auction_id>/<state>', login_required(views.update_auction_state)),
+    path('admin/auction/update-state/<int:auction_id>/<int:state>', login_required(views.update_auction_state)),
 
     path('api/join/', views.join),
     path('api/join-admin/', views.join_admin),

@@ -287,7 +287,7 @@ def auction_detail_view(request, auction_id):
     if timezone.now() >= auction.end_datetime and auction.state == '진행중':
         auction.state = '완료'
         auction.save()
-    auction_history = AuctionHistory.objects.filter(auction_id=auction_id).order_by('created_datetime').reverse()
+    auction_history = AuctionHistory.objects.filter(auction_id=auction_id).order_by('id').reverse()
     min_bid = auction.min_bid
     if auction_history:
         min_bid = auction.winning_bid + 1000
@@ -349,6 +349,7 @@ def auction_admin_view(request):
 
 def update_auction_state(request, auction_id, state):
     auction = Auction.objects.get(id=auction_id)
+    print(state)
     if state == 3:
         auction.state = '완료'
     elif state == 4:

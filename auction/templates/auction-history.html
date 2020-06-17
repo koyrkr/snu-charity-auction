@@ -6,30 +6,35 @@
     <table class="table">
       <thead>
       <tr>
-        <th scope="col">No</th>
-        <th scope="col">경매번호</th>
+        <th class="text-center" scope="col">No</th>
+        <th class="text-center" scope="col">경매번호</th>
         <th scope="col">이름</th>
         <th scope="col">입찰가</th>
-        <th scope="col">상태</th>
+        <th class="text-center" scope="col">상태</th>
         <th scope="col">입찰시각</th>
         <th scope="col">보기</th>
       </tr>
       </thead>
       <tbody>
-        <td>1</td>
-        <td>2</td>
-        <td>아디다스 슈퍼스타</td>
-        <td>100,000</td>
-        <td>유효</td>
-        <td>2020-06-14 14:22:33</td>
-        <td><a href="/auction/detail/2/" class="btn btn-success btn-sm">보기</a></td>
         {% for history in auction_history %}
           <tr>
-            <td>{{ history.id }}</td>
-            <td>{{ history.auction.id }}</td>
+            <td class="text-center">{{ history.id }}</td>
+            <td class="text-center">{{ history.auction.id }}</td>
             <td>{{ history.auction.name }}</td>
-            <td>{{ history.bid | intcomma }}</td>
-            <td>{% if history.is_valid %}유효{% else %}무효{% endif %}</td>
+            <td >{{ history.bid | intcomma }}</td>
+            <td class="text-center">
+              {% if history.is_valid %}
+                {% if history.auction.state == '완료' %}
+                  <div class="alert alert-primary" style="padding: 0; margin-bottom:0 " role="alert">완료</div>
+                {% elif history.auction.state == '낙찰' %}
+                  <div class="alert alert-success" style="padding: 0; margin-bottom:0 " role="alert">낙찰</div>
+                {% else %}
+                  <div class="alert alert-primary" style="padding: 0; margin-bottom:0 " role="alert">유효</div>
+                {% endif %}
+              {% else %}
+                무효
+              {% endif %}
+            </td>
             <td>{{ history.created_datetime | date:'Y-m-d H:i:s' }}<br/>{{ auction.end_datetime | date:'m/d H:i' }}</td>
             <td><a href="/auction/detail/{{ history.auction.id }}/" class="btn btn-success btn-sm">보기</a></td>
           </tr>

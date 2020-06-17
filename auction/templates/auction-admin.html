@@ -46,8 +46,8 @@
                         {{ auction.id }}번 물품 [{{ auction.name }}]의 현재 입찰가 {{ auction.winning_bid | intcomma }}원으로 {{ auction.winning_user.username }}님이 마지막 입찰자입니다. 경매를 종료하시겠습니까?
                       </div>
                       <div class="modal-footer">
-                        <a href="/admin/auction/update-state/{{ auction.id }}/3" class="btn btn-danger" data-dismiss="modal">강제 종료</a>
-                        <a href="/admin/auction/update-state/{{ auction.id }}/5" class="btn btn-danger" data-dismiss="modal">경매 취소</a>
+                        <a href="/admin/auction/update-state/{{ auction.id }}/3" class="btn btn-danger">강제 종료</a>
+                        <a href="/admin/auction/update-state/{{ auction.id }}/5" class="btn btn-danger">경매 취소</a>
                         <button type="button" class="btn btn-outline-danger" data-dismiss="modal">닫기</button>
                       </div>
                     </div>
@@ -67,8 +67,8 @@
                         {{ auction.id }}번 물품 [{{ auction.name }}]이 최종 입찰가 {{ auction.winning_bid | intcomma }}원으로 {{ auction.winning_user.username }}님에게 낙찰 되었습니다. 최종 낙찰 승인하시겠습니까?
                       </div>
                       <div class="modal-footer">
-                        <a href="/admin/auction/update-state/{{ auction.id }}/4" class="btn btn-success" data-dismiss="modal">최종 낙찰</a>
-                        <a href="/admin/auction/update-state/{{ auction.id }}/5" class="btn btn-danger" data-dismiss="modal">경매 취소</a>
+                        <a href="/admin/auction/update-state/{{ auction.id }}/4" class="btn btn-success">최종 낙찰</a>
+                        <a href="/admin/auction/update-state/{{ auction.id }}/5" class="btn btn-danger">경매 취소</a>
                         <button type="button" class="btn btn-outline-danger" data-dismiss="modal">닫기</button>
                       </div>
                     </div>
