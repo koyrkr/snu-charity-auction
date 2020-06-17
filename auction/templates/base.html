@@ -1,0 +1,129 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="SNU Charity Auction">
+  <meta name="author" content="SNU Charity Auction Team">
+
+  <title>{% block title %} SNU자선경매 {% endblock %}</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+  <!-- Custom styles for this template -->
+  <link href="{% static 'css/main.css' %}" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+
+  <style>
+
+    @font-face { 
+      font-family: 'GmarketSansBold'; 
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff') format('woff'); 
+      font-weight: normal; 
+      font-style: normal; 
+    }
+
+    @font-face { 
+      font-family: 'RIDIBatang'; 
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.0/RIDIBatang.woff') format('woff'); 
+      font-weight: normal; 
+      font-style: normal; 
+    }
+
+    @font-face { 
+      font-family: 'GmarketSansMedium'; 
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff'); 
+      font-weight: normal; 
+      font-style: normal; }
+
+    /* body {font-family: 'Noto Sans KR';} */
+    body {font-family: 'GmarketSansMedium';}
+    h1 {font-family: 'GmarketSansBold'}
+    h2 {font-family: 'GmarketSansBold'}
+    h3 {font-family: 'GmarketSansBold'}
+    form {font-family: 'GmarketSansMedium'}
+    input {font-family: 'GmarketSansMedium'}
+
+    .submit {
+      position: absolute;
+      bottom: 10px;
+      left: 550px;      
+    }
+
+    /* Three image containers (use 25% for four, and 50% for two, etc) */
+    .column {
+      float: left;
+      width: 33.33%;
+      padding: 5px;
+    }
+
+    /* Clear floats after image containers */
+    .row::after {
+      content: "";
+      clear: both;
+      display: table;
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="/" style="font-family: GmarketSansMedium;">SNU자선경매</a>
+      <a class="navbar-brand" style="margin-left: 100px;" href="/">물품보기</a>
+      {% if not request.user.is_admin %}
+        <a class="navbar-brand" style="margin-left: 40px;" href="/auction-history/">경매참여내역</a>
+      {% elif request.user.is_admin %}
+        <a class="navbar-brand" style="margin-left: 40px;" href="/admin/auction/">경매관리</a>
+        <a class="navbar-brand" style="margin-left: 40px;" href="/user-list">사용자관리</a>
+      {% endif %}
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            {% if request.user.is_authenticated %}
+              <a class="btn btn-md btn-light nav-login-btn nav-login-btn" href="/mypage">{{ request.user.username }}</a>
+            {% endif %}
+          </li>
+          <li class="nav-item">
+            {% if request.user.is_authenticated %}
+              <a class="btn btn-md btn-primary nav-login-btn" href="/logout">로그아웃</a>
+            {% else %}
+              <a class="btn btn-md btn-primary nav-login-btn" href="/login">로그인</a>
+            {% endif %}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div style="height: 20px;"></div>
+  {% block content %}{% endblock %}
+  <div style="height: 20px;"></div>
+
+  <!-- Footer -->
+  <footer class="py-5 bg-dark" style="position: relative !important;">
+    <div class="container">
+      <p class="m-0 text-center text-white">Copyright &copy; SNU Charity Auction 2020</p>
+      <div style="margin-top: 5px;"><p class="m-0 text-center text-white">2020년 봄학기 서울대학교 소프트웨어응용 Agile 팀프로젝트 B팀</p></div>
+    </div>
+    <!-- /.container -->
+  </footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

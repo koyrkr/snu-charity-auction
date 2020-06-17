@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block content %}
+  <style>
+    input {
+      width: 300px;
+    }
+  </style>
+  <form method="post" action="/api/join-admin/">
+    {% csrf_token %}
+    <h3 style="text-align: center; margin-bottom: 50px;">새 관리자 추가하기</h3>
+    <div class="container" style="text-align: center;">
+      <p>
+        <label for="id_username"></label>
+        <input style="padding: 4px;" type="text" placeholder="닉네임" name="username" maxlength="150" required="" id="id_username">
+        <br>
+      </p>
+      <p>
+        <label for="id_email"></label>
+        <input style="padding: 4px;" type="email" placeholder="이메일 (***@snu.ac.kr)" name="email" autofocus="" required="" id="id_email">
+        <span class="helptext"></span>
+      </p>
+      <p>
+        <label for="id_password1"></label>
+        <input style="margin-bottom:10px; padding: 4px;" type="password" placeholder="비밀번호" name="password1" autocomplete="new-password" required="" id="id_password1">
+        <br>
+        <span class="helptext">*소문자, 대문자, 특수문자가 모두 1개 이상 포함되어야 합니다.</span>
+      </p>
+      <br>
+      <p>
+        <label for="id_password2"></label>
+        <input style="margin-bottom:10px; padding: 4px;" type="password" placeholder="비밀번호 확인" name="password2" autocomplete="new-password" required="" id="id_password2">
+        <br>
+        <span class="helptext">*비밀번호를 다시 한 번 입력해주세요.</span>
+      </p>
+
+      <button class="btn btn-primary btn-lg mb-4 btn-block" style="width:max-content; margin-left: 500px; margin-top: 50px;">추가하기</button>
+    </div>
+  </form>
+
+{% endblock %}

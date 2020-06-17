@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<div id="logreg-forms">
+    <form class="form-signin" method="post">
+        {% csrf_token %}
+        <h1 class="h3 mb-3 font-weight-normal" style="text-align: center">로그인</h1>
+        <input type="email" id="inputEmail" class="form-control" placeholder="이메일 (***@snu.ac.kr)" name="username" required="" autofocus="">
+        <input type="password" id="inputPassword" class="form-control" placeholder="비밀번호" name="password" required="">
+
+        <button class="btn btn-success btn-block" type="submit"><i class="fas fa-sign-in-alt"></i>로그인</button>
+        <hr>
+        <!-- <p>Don't have an account!</p>  -->
+        <a class="btn btn-primary text-white" style="padding-top: 5px;" id="btn-signup" href="/join">
+          <i class="fas fa-user-plus"></i>회원가입
+        </a>
+    </form>
+</div>
+{% endblock %}

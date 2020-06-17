@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+  <style>
+    .badge {
+      font-size: 100% !important;
+      font-weight: 500 !important;
+    }
+  </style>
+  <!-- Page Content -->
+  <div class="container">
+    <div class="row">
+      <form action="/auction/" method="get">
+        <b>&nbsp;&nbsp;종류&nbsp;&nbsp;</b>
+        <select name="auction_type" style="padding: 4px;">
+          <option value="1">전체</option>
+          <option value="2">의류/신발</option>
+          <option value="3">전자기기</option>
+          <option value="4">책</option>
+          <option value="5">기타</option>
+        </select>
+        <b>&nbsp;&nbsp;종료 날짜&nbsp;&nbsp;</b>
+        <select name="end_date" style="padding: 4px;">
+          <option value="1">전체</option>
+          <option value="2"> ~ 3일 이내</option>
+          <option value="3">3일 ~ 5일이내</option>
+          <option value="4">5일 ~ 7일이내</option>
+          <option value="5">7일 ~</option>
+        </select>
+        <b>&nbsp;&nbsp;가격&nbsp;&nbsp;</b>
+        <select name="price" style="padding: 4px;">
+          <option value="1">전체</option>
+          <option value="2"> ~ 20,000원 미만</option>
+          <option value="3">20,000원 ~ 40,000원 미만</option>
+          <option value="4">40,000원 ~ 60,000원 미만</option>
+          <option value="5">60,000원 ~</option>
+        </select>
+        <input style="margin-left: 25px;" type="text" name="keyword" size="24" placeholder="키워드 (단어)"/>
+        {% if not request.user.is_admin %}
+          <input type="submit" class="btn btn-sm btn-primary" style="margin-left: 50px; width: 100px;" value="검색"/>
+        {% endif %}
+        {% if request.user.is_admin %}
+          <input type="submit" class="btn btn-sm btn-primary" style="margin-left: 20px; width: 70px;" value="검색"/>
+          <a href="/auction/create/" class="btn btn-sm btn-success" style="margin-left: 10px; width: 70px;">등록</a>
+        {% endif %}
+      </form>
+    </div>
+    <br/>
+
+    {% for auction in auctions %}
+      {% if forloop.counter0|divisibleby:4 %}
+        <div class="row">
+      {% endif %}
+      <div class="col-lg-3 col-md-6 mb-4">
+        <div class="card h-100">
+          <img class="card-img-top" src="{% static 'img/item1.jpg' %}" alt="">
+          <div class="card-body">
+            <div style="height: 60px;">
+              <h4 class="card-title">{{ auction.name }}</h4>
+            </div>
+            <div style="margin-bottom: 5px;">
+              {% if auction.state == '준비' %}
+                <span class="badge badge-info">준비</span>
+              {% elif auction.state == '진행중' %}
+                <span class="badge badge-primary">진행중</span>
+              {% elif auction.state == '완료' %}
+                <span class="badge badge-success">완료</span>
+              {% elif auction.state == '낙찰' %}
+                <span class="badge badge-secondary">낙찰</span>
+              {% elif auction.state == '취소' %}
+                <span class="badge badge-danger">취소</span>
+              {% endif %}
+            </div>
+            <p class="card-text text-left">
+                시작가: {{ auction.min_bid | intcomma }}원 <br/>
+                현재가: {{ auction.winning_bid | intcomma }}원 <br/>
+                입찰: {{ auction.participants_count }}명 <br/>
+                종료: {{ auction.end_datetime | date:'m/d H:i' }}
+            </p>
+          </div>
+          <div class="card-footer text-center">
+            <a href="/auction/detail/{{ auction.id }}" class="btn btn-primary">자세히보기</a>
+            {% if request.user.is_admin %}
+              <a href="/auction/modify/{{ auction.id }}" class="btn btn-warning" style="margin-left: 10px;">수정</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% if forloop.counter0|add:1|divisibleby:4 or forloop.last %}
+        </div>
+      {% endif %}
+      {% empty %}
+      <div class="text-center" style="margin: 100px 0;">
+        <h4>검색 조건을 만족하는 물품이 없습니다.</h4>
+      </div>
+    {% endfor %}
+
+  </div>
+  <!-- /.container -->
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script>
+    const auctionType = location.href.match(/[?&]auction_type=(.*?)[$&]/);
+    if (auctionType)
+      $('select[name="auction_type"]').val(auctionType[1]);
+    const endDate = location.href.match(/[?&]end_date=(.*?)[$&]/);
+    if (endDate)
+      $('select[name="end_date"]').val(endDate[1]);
+    const price = location.href.match(/[?&]price=(.*?)[$&]/);
+    if (price)
+      $('select[name="price"]').val(price[1]);
+    const keyword = location.href.match(/[?&]keyword=(.*)/);
+    if (keyword)
+      $('input[name="keyword"]').val(keyword[1]);
+  </script>
+{% endblock %}

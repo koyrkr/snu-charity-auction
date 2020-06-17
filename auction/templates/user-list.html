@@ -1,0 +1,170 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+  <style>
+    .modal {
+        text-align: center;
+    }
+    @media screen and (min-width: 768px) {
+        .modal:before {
+                display: inline-block;
+                vertical-align: middle;
+                content: " ";
+                height: 100%;
+        }
+    }
+    .modal-dialog.modal-size {
+        width: 100%;
+        height: 60%;
+        margin: 0;
+        padding: 0;
+    }
+    .modal-dialog {
+        display: inline-block;
+        text-align: left;
+        vertical-align: middle;
+    }
+    .vl {
+        border-left: 2px solid green;
+        height: 20px;
+    }
+    .modal-row {
+      margin-bottom: 10px;
+    }
+  </style>
+
+  <div class="container p-3">
+    <h1 class="text-center md-10 mb-5 font-weight-bold">사용자관리</h1>
+    <div class="text-right" style="margin-bottom: 10px;">
+      <a href="/join-admin/" type="button" class="btn btn-outline-success">새 관리자 추가하기</a>
+    </div>
+    <table class="table">
+      <thead>
+      <tr>
+        <td>No</td>
+        <td>권한</td>
+        <td>이름</td>
+        <td>메일</td>
+        <td>가입 날짜</td>
+        <td>탈퇴 날짜</td>
+        <td></td>
+      </tr>
+      </thead>
+      <tbody>
+      {% for user in users %}
+        <tr>
+          <td>{{ user.id }}</td>
+          {% if user.is_admin %}
+            <td>관리자</td>
+          {% endif %}
+          {% if not user.is_admin %}
+            <td>사용자</td>
+          {% endif %}
+          <td>{{ user.username }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.date_joined | date:'Y-m-d H:i' }}</td>
+          <td>{{ user.deleted_datetime | date:'Y-m-d H:i' | default_if_none:'-' }}</td>
+          <td>
+            <div class="bottom">
+              <button class="btn btn-warning" data-toggle="modal" data-target="#myModal{{ user.id }}">
+                관리
+              </button>
+            </div>
+          </td>
+        </tr>
+        <!-- Modal -->
+        <div class="modal fade" id="myModal{{ user.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-size">
+            <div class="modal-content modal-size">
+              <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">사용자 정보</h4>
+              </div>
+              <div class="modal-body">
+                <p>
+                  <div class="row modal-row">
+                    <div class="col-md-3">
+                      이름
+                    </div>
+                    <div class="vl"></div>
+                    <div class="col-md-3">
+                      {{ user.username }}
+                    </div>
+                  </div>
+                  <div class="row modal-row">
+                    <div class="col-md-3">
+                      권한
+                    </div>
+                    <div class="vl"></div>
+                    <div class="col-md-3">
+                      {% if user.is_admin %}
+                        관리자
+                      {% endif %}
+                      {% if not user.is_admin %}
+                        사용자
+                      {% endif %}
+                    </div>
+                    <div class="vl"></div>
+                    <div class="col-md-3">
+                      입찰권한
+                    </div>
+                    <div class="vl"></div>
+                    <div class="col-md-1">
+                      {% if user.has_permit %}
+                        O
+                      {% endif %}
+                      {% if not user.has_permit %}
+                        X
+                      {% endif %}
+                    </div>
+                  </div>
+                  <div class="row modal-row">
+                    <div class="col-md-3">
+                      메일
+                    </div>
+                    <div class="vl"></div>
+                    <div class="col-md-3">
+                      {{ user.email }}
+                    </div>
+                  </div>
+                  <div class="row modal-row">
+                    <div class="col-md-3">
+                      가입날짜
+                    </div>
+                    <div class="vl"></div>
+                    <div class="col-md-6">
+                      {{ user.date_joined | date:'Y-m-d H:i' }}
+                    </div>
+                  </div>
+                  <div class="row modal-row">
+                    <div class="col-md-3">
+                      탈퇴날짜
+                    </div>
+                    <div class="vl"></div>
+                    <div class="col-md-6">
+                      {{ user.deleted_datetime | date:'Y-m-d H:i' | default_if_none:'-' }}
+                    </div>
+                  </div>
+                </p>
+              </div>
+              <div class="modal-footer">
+                {% if user.has_permit %}
+                  <a href="{{ user.id }}/take_auth" onclick="return confirm('{{ user.username }}님의 입찰 권한을 중지하시겠습니까?');" class="btn btn-warning" >입찰권한중지</a>
+                {% endif %}
+                {% if not user.has_permit %}
+                  <a href="{{ user.id }}/give_auth" onclick="return confirm('{{ user.username }}님께 입찰 권한을 부여하시겠습니까?');" class="btn btn-success" >입찰권한부여</a>
+                {% endif %}
+                {% if user.deleted_datetime == None %}
+                  <a href="{{ user.id }}/delete" onclick="return confirm('{{ user.username }}님을 회원 탈퇴시키겠습니까?');" class="btn btn-danger">회원탈퇴</a>
+                {% else %}
+                  <button disabled class="btn btn-danger">회원탈퇴</button>
+                {% endif %}
+                <button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">닫기</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

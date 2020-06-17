@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+
+<section>
+  <h2 class="text-center md-10 mb-5 font-weight-bold">물품 상세 정보</h2>
+  <div class="container">
+    <div class="product-details"></div>
+      <div class="row">
+      <!--product-details-->
+        <div class="col-sm-5">
+          <div class="view-product">
+            <img class="img-thumbnail mb-4" src="{% static 'img/item1.jpg' %}" alt="">
+          </div>
+          <div class="view-other-image">
+            <div class="row">
+              <div class="p-2">
+                <div class="column">
+                  <img class="img-responsive img-thumbnail float-left" src="{% static 'img/item1.jpg' %}" alt="">
+                </div>
+                <div class="column">
+                  <img class="img-responsive img-thumbnail float-left" src="{% static 'img/item1.jpg' %}" alt="">
+                </div>
+                <div class="column">
+                  <img class="img-responsive img-thumbnail float-left" src="{% static 'img/item1.jpg' %}" alt="">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-7" style="border: 5px double #c5c3c3;" >
+          <div class="product-information">
+            <!--/product-information-->
+            <h2 class="text-center md-10 font-weight-bold" style="margin-top: 20px;">{{ auction.name }}</h2>
+            &nbsp;
+            <p><b>시작가:</b> {{ auction.min_bid | intcomma }}원</p>
+            <p><b>현재가:</b> {{ auction.winning_bid | intcomma }}원</p>
+            <p><b>최고가:</b> {{ auction.max_bid | intcomma }}원</p>
+            <p><b>입찰:</b> {{ auction.participants_count }}명</p>
+            <p><b>시작:</b> {{ auction.start_datetime | date:'Y-m-d H:i:s' }}</p>
+            <p><b>종료:</b> {{ auction.end_datetime | date:'Y-m-d H:i:s '}}</p>
+            &nbsp;
+            <hr style="border: solid 1px #c5c3c3; width: 100%;">
+            <h2 class="text-center md-10 font-weight-bold">상세 정보</h2>
+            &nbsp;
+            {{ auction.contents }}
+            <p><b>Condition:</b> New</p>
+            <p><b>Brand:</b> E-SHOPPER</p>
+            <p><b>Condition:</b> New</p>
+            <p><b>Brand:</b> E-SHOPPER</p>
+            <p><b>Condition:</b> New</p>
+            <p><b>Brand:</b> E-SHOPPER</p>
+            &nbsp;
+            <div class="submit">
+              <button class="btn btn-primary btn-lg mb-4 pull-right btn-block" style="width:max-content;">입찰</button>
+              {% if request.user.is_admin %}
+                <a href="/delete/{{ auction.id }}" onclick="return confirm('정말 삭제하시겠습니까?');" class="btn btn-warning" style="margin-left: 10px;">삭제</a>
+              {% endif %}
+            </div>
+          </div>
+          <!--/product-information-->
+        </div>
+        <!--/product-details-->
+      </div>
+    </div>   
+  </div>
+</section>
+
+{% endblock %}
