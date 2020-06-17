@@ -113,6 +113,6 @@
       $('select[name="price"]').val(price[1]);
     const keyword = location.href.match(/[?&]keyword=(.*)/);
     if (keyword)
-      $('input[name="keyword"]').val(keyword[1]);
+      $('input[name="keyword"]').val(decodeURI(keyword[1]));
   </script>
 {% endblock %}

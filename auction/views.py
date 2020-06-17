@@ -185,6 +185,7 @@ def create_auction(request):
         image1=file1,
         image2=file2,
         image3=file3,
+        state='준비',
         start_datetime=start_datetime,
         end_datetime=end_datetime,
         min_bid=min_bid,
@@ -268,14 +269,14 @@ def modify_auction(request):
     return HttpResponseRedirect(f'/auction/detail/{auction_id}')
 
 
-def delete_auction(request, auction_id):
+def delete_auction_view(request, auction_id):
     if not request.user.is_admin:
         return render(request, 'no-authorization.html')
         
     auction = Auction.objects.get(id=auction_id)
     auction.deleted_datetime = datetime.now()
     auction.save()
-    return HttpResponseRedirect('/')
+    return render(request, 'auction-delete.html')
 
 
 def auction_detail_view(request, auction_id):

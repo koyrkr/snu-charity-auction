@@ -23,7 +23,7 @@ urlpatterns = [
     path('auction/create/', login_required(views.create_auction_view)),
     path('auction/modify/<int:auction_id>/', login_required(views.modify_auction_view)),
     path('auction/detail/<int:auction_id>/', login_required(views.auction_detail_view)),
-    path('auction/detail/<int:auction_id>/delete/', login_required(views.delete_auction)),
+    path('auction/delete/<int:auction_id>/', login_required(views.delete_auction_view)),
     path('user-list/', views.user_list_view),
     path('user-list/<int:user_id>/delete/', views.delete_user),
     path('user-list/<int:user_id>/take_auth/', views.take_authority),
