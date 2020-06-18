@@ -18,7 +18,7 @@ urlpatterns = [
     path('mypage/', login_required(views.mypage_view)),
     path('user-update/', views.user_update),
     path('auction/', login_required(views.auction_view)),
-    path('auction/apply/<int:auction_id>', login_required(views.auction_apply_view)),
+    path('auction/apply/<int:auction_id>/', login_required(views.auction_apply_view)),
     path('auction-history/', login_required(views.auction_history_view)),
     path('auction/create/', login_required(views.create_auction_view)),
     path('auction/modify/<int:auction_id>/', login_required(views.modify_auction_view)),

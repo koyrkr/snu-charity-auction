@@ -140,7 +140,7 @@
                         <p style="margin-top: 0.5rem;">최소 입찰가 {{ min_bid | intcomma }}원</p>
                       </div>
                       <div class="col-md-7">
-                      <form action="/auction/apply/{{ auction.id }}" method="post">
+                      <form action="/auction/apply/{{ auction.id }}/" method="post">
                         {% csrf_token %}
                         <div class="input-group" style="display: inline; margin-left: 45px;">
                           <input type="number" style="width: 150px; display: inline-block;" class="form-control" name="bid"/>
